@@ -1,6 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from fa_diacritizer.model import diacritize
+from fa_diacritizer.text_processor import remove_diacritics
 
 # ---------- page setting ----------
 st.set_page_config(
@@ -46,19 +47,21 @@ input_text = st.text_area(
     placeholder="input your text",
     key="input_text",
 )
+input_text = remove_diacritics(input_text)
 
+# ----------- buttons -------------
 col1, col2 = st.columns([1, 1])
 with col1:
-    process_btn = st.button("🚀 Processing", type="primary", use_container_width=True)
+    text_process_button = st.button("🚀 Processing", type="primary", use_container_width=True)
 with col2:
-    clear_btn = st.button("🗑️ delete", use_container_width=True)
+    clear_button = st.button("🗑️ delete", use_container_width=True)
 
-if clear_btn:
+if clear_button:
     st.session_state.pop("output_text", None)
     st.rerun()
 
 # ---------- Processing ----------
-if process_btn:
+if text_process_button:
     if input_text.strip():
         st.session_state["output_text"] = diacritize(input_text)
     else:
@@ -69,7 +72,7 @@ if "output_text" in st.session_state:
     output = st.session_state["output_text"]
     st.subheader("📤 output")
     st.code(output, language=None)
-    
+
 
     # txt download button
     st.download_button(
