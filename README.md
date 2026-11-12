@@ -84,7 +84,7 @@ fa-diacritizer/
 │   └── fa_diacritizer/
 │       ├── __init__.py
 │       ├── model.py
-│       └── text_processor.py
+│       └── pre_processor.py
 ├── .python-version
 ├── .gitignore
 ├── LICENSE

@@ -1,7 +1,9 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from fa_diacritizer.model import diacritize
-from fa_diacritizer.text_processor import remove_diacritics
+from fa_diacritizer.pre_processor import preprocess
+
+
 
 # ---------- page setting ----------
 st.set_page_config(
@@ -47,7 +49,7 @@ input_text = st.text_area(
     placeholder="input your text",
     key="input_text",
 )
-input_text = remove_diacritics(input_text)
+input_text = preprocess(input_text)
 
 # ----------- buttons -------------
 col1, col2 = st.columns([1, 1])

@@ -2,26 +2,21 @@
 import torch
 from transformers import CanineTokenizer, CanineForTokenClassification
 
-# شناسه مدل در Hugging Face
+# Model ID on Hugging Face
 MODEL_ID = "PedramR/canine-fa-diacritizer"
 
-# بارگذاری Tokenizer از فایل‌های دانلودشده
+#Loading the Tokenizer from downloaded files
 tokenizer = CanineTokenizer.from_pretrained(
     MODEL_ID,
     local_files_only=True
 )
 
-# بارگذاری مدل از فایل‌های دانلودشده
+# Loading the model from downloaded files
 model = CanineForTokenClassification.from_pretrained(
     MODEL_ID,
     local_files_only=True
 ).eval()
 
-# نمایش اطلاعات
-print("Tokenizer:", type(tokenizer).__name__)
-print("Model:", type(model).__name__)
-print("Device:", next(model.parameters()).device)
-print(model.config.id2label)
 MARKS = {
     "FATHA": "َ",
     "DAMMA": "ُ",
@@ -30,6 +25,8 @@ MARKS = {
     "SHADDA": "ّ",
     "FATHATAN": "ً",
 }
+
+
 def label_to_marks(label):
     if label == "NONE":
         return ""
