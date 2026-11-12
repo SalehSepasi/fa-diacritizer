@@ -1,4 +1,4 @@
-
+"""
 import torch
 from transformers import CanineTokenizer, CanineForTokenClassification
 
@@ -15,7 +15,35 @@ tokenizer = CanineTokenizer.from_pretrained(
 model = CanineForTokenClassification.from_pretrained(
     MODEL_ID,
     local_files_only=True
+).eval()"""
+import torch
+from huggingface_hub import try_to_load_from_cache
+from transformers import CanineTokenizer, CanineForTokenClassification
+
+# Model ID on Hugging Face
+MODEL_ID = "PedramR/canine-fa-diacritizer"
+
+# اگر مدل قبلاً در کش محلی باشد آفلاین لود می‌شود،
+# وگرنه (مثلاً روی Streamlit Cloud) یک بار دانلود می‌شود
+LOCAL_ONLY = isinstance(try_to_load_from_cache(MODEL_ID, "config.json"), str)
+
+# Loading the Tokenizer
+tokenizer = CanineTokenizer.from_pretrained(
+    MODEL_ID,
+    local_files_only=LOCAL_ONLY,
+)
+
+# Loading the model
+model = CanineForTokenClassification.from_pretrained(
+    MODEL_ID,
+    local_files_only=LOCAL_ONLY,
 ).eval()
+
+
+
+
+
+
 
 MARKS = {
     "FATHA": "َ",
